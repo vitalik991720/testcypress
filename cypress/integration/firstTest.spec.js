@@ -11,3 +11,10 @@
 
 /// <reference types="Cypress" />
 
+it('SHOULD', ()=>{
+   cy.visit('https://next.privat24.ua/mobile?lang=en')
+   cy.get('[data-qa-node="amount"]')
+   .type(100)
+   .should('have.value', 100)
+   .and('be.visible')
+})
