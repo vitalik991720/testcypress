@@ -42,6 +42,7 @@ it('сheck is visible Archive ', ()=>{
    .should('be.visible') 
 })
 
+
 it('chech is correct attr in button', ()=>{
    cy.visit('https://next.privat24.ua?lang=en')
    cy.contains('Show cards')
