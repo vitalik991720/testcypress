@@ -136,6 +136,7 @@ it('check',()=>{
    cy.scrollTo(0, 500)
 })
 
+
 it.only('check',()=>{
    cy.visit('https://next.privat24.ua/mobile?lang=en')
    .contains('Services')
