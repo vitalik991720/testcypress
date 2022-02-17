@@ -12,61 +12,56 @@
 //});
 
 /// <reference types="Cypress" />
-it('Replenishment of Ukraine mobile phone number', ()=>{
+import { mobileReplenishment } from "../support/pages/mobileReplenishment.js";
+
+it.only('Replenishment of Ukraine mobile phone number', ()=>{
 cy.visit('https://next.privat24.ua/mobile?lang=en')
-.get('[data-qa-node="phone-number"]')
-.type('686979712')
-.get('[data-qa-node="amount"]')
-.type('1')
-.get('[data-qa-node="numberdebitSource"]')
-.type('4552331448138217')
-.get('[data-qa-node="expiredebitSource"]')
-.type('0524')
-.get('[data-qa-node="cvvdebitSource"]')
-.type('111')
-.get('[data-qa-node="submit"]')
-.click()
+
+mobileReplenishment.typePhoneNumber('686979712')
+mobileReplenishment.typeAmount('1')
+mobileReplenishment.typeDebitCardData('4552331448138217', '0524', '111')
+
+mobileReplenishment.submitPayment()
+cy.wait(3000)
 //next step check valid card and ect.
-.get('[data-qa-node="card"]')
-.should('have.text', '4552 **** **** 8217')
-.get('[data-qa-node="amount"]')
-.eq(1)
-.should('contain.text', "1")
-.get('[data-qa-node="currency"]')
-.eq(0)
-.should('contain.text','UAH')
-.get('[data-qa-node="commission"]')
-.eq(1)
-.should('have.text','2')
-.get('[data-qa-node="commission-currency"]')
-.should('contain.text','UAH')
+mobileReplenishment.checkDebitCard('4552 **** **** 8217')
+mobileReplenishment.checkDebitAmount('1')
+mobileReplenishment.checkDebitAmountAndComission('2')
+mobileReplenishment.checkReceiverAmount('1')
+mobileReplenishment.checkPaymentCurrency('UAH')
 
 
 })
 
 
-it.only('Money transfer between foreign card', ()=>{
+it('Money transfer between foreign card', ()=>{
    cy.visit('https://next.privat24.ua/money-transfer/card?lang=en')
-   .get('[data-qa-node="numberdebitSource"]')
-.type('4552331448138217')
-.get('[data-qa-node="expiredebitSource"]')
-.type('0524')
-.get('[data-qa-node="cvvdebitSource"]')
-.type('111')
+
+transfers.typeDebitCardData('4552331448138217', '0524', '111')
+transfers.typeNameandSurname('Shayne', 'McConnell')
+
+
 .get('[data-qa-node="firstNamedebitSource"]')
 .type('Shayne')
+
 .get('[data-qa-node="lastNamedebitSource"]')
 .type('McConnell')
+
 .get('[data-qa-node="numberreceiver"]')
 .type('5309233034765085')
+
 .get('[data-qa-node="amount"]')
 .type('300')
+
 .get('[data-qa-node="toggle-comment"]')
 .click()
 .get('[data-qa-node="comment"]')
 .type('Cypress test')
+
+
 .get('[data-qa-node="firstNamereceiver"]')
 .type('July')
+
 .get('[data-qa-node="lastNamereceiver"]')
 .type('Janssen')
 .get('button[type=submit]')
