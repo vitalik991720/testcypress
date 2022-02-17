@@ -72,6 +72,7 @@ it.only('Money transfer between foreign card', ()=>{
 .get('button[type=submit]')
 .click()
 
+
 //Check correct data send user transfer
 
 .get('[data-qa-node="payer-card"]')
